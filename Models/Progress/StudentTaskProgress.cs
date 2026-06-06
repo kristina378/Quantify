@@ -1,0 +1,62 @@
+namespace Quantify.Core.Models;
+
+public class AddingChancesException: Exception{}
+public class StudentTaskProgress
+{
+    public long StudentTaskProgressId {get; init;}
+    public static int LimitCount = 5;
+
+    public long UserId {get; private set;}
+    public long TaskId{get; init;}
+    public MathTask Task {get; init;}
+
+    public int ApproachNumber{get; private set;}
+    public float Average {get; private set;}
+    public bool Passed{get; private set;}
+    
+    public List<Approach> Attempts {get; init;} = new List<Approach>();
+
+    public StudentTaskProgress(){}
+    public StudentTaskProgress(long userId, MathTask task, List<Answer> studentAnswers)
+    {
+        ApproachNumber = 1;
+
+        UserId = userId;
+        TaskId = task.TaskId;
+        Task = task;
+
+        Approach newAttempt = new Approach(task, studentAnswers,this);
+        Attempts.Add(newAttempt);
+
+        Average = newAttempt.Passed? task.PointsCount: 0;
+        Passed = newAttempt.Passed;
+    }
+
+    
+    public void AddAnotherApproach(List<Answer> studentAnswers)
+    {
+        if((++ApproachNumber) < LimitCount)
+        {
+            Approach nextAttempt = new Approach(this.Task,studentAnswers,this);
+            Attempts.Add(nextAttempt);
+
+            Average = (Average * (ApproachNumber - 1) + (nextAttempt.Passed? Task.PointsCount: 0))/ApproachNumber;
+        }
+        else
+        {
+            throw new LimitApproachCountException();
+        }
+    }
+
+    public void AddAnotherChance(int chancesCount)
+    {
+        if(chancesCount + ApproachNumber < LimitCount)
+        {
+            ApproachNumber -= chancesCount;
+        }
+        else
+        {
+            throw new AddingChancesException();
+        }
+    }
+}
