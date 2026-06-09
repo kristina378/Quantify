@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Quantify.Core.Models;
 
 public class LimitApproachCountException: Exception{}

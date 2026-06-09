@@ -8,7 +8,7 @@ public enum Permissions
 public abstract class User
 {
     public long Id {get; private set;}
-    public Permissions Permission { get; private set;}
+    public Permissions Permission { get; protected set;}
 
     public string Name {get; set;}
     public string Surname {get; set;}
