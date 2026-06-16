@@ -8,7 +8,7 @@ public class StudentTaskProgress
 
     public long UserId {get; private set;}
     public long TaskId{get; init;}
-    public MathTask Task {get; init;}
+    public MathTask Task {get; init;} = null!;
 
     public int ApproachNumber{get; private set;}
     public float Average {get; private set;}

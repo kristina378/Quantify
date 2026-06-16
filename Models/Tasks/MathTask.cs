@@ -17,16 +17,16 @@ public class MathTask
     public long TaskId {get; init;}
 
     public long TopicId{get; init;}
-    public Topic BelongsToTopic { get; init; }
+    public Topic BelongsToTopic { get; init; } = null!;
 
     public int PointsCount{get; private set;}
     public DifficultyLevel Level {get; init;}
     public int ExpReward{get; init;}
 
-    public string Contents {get; private set;}
+    public required string Contents {get; init;}
     public User? Author{get; private set;}
     public long? AuthorId { get; init; }
-    public List<Answer> RightAnswer{get; init;}
+    public required List<Answer> RightAnswer{get; init;}
 
     public MathTask(){}
     public MathTask(int points, DifficultyLevel level, string content, List<Answer> rightAnswer, Topic topic, int expReward = 1)
