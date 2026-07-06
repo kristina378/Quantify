@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics.CodeAnalysis;
+
+
 namespace Quantify.Core.Users;
 
 public enum Permissions
@@ -15,12 +19,17 @@ public abstract class User
     public required string Email {get; set;}
     public required string PhoneNumber {get; set;}
 
+    public required string PasswordHash { get; set; }
+
     protected User(){}
-    public User(string name, string surname, string email, string phoneNumber)
+
+    [SetsRequiredMembers]
+    public User(string name, string surname, string email, string phoneNumber,string passwordHash)
     {
         Name = name;
         Surname = surname;
         Email = email;
         PhoneNumber = phoneNumber;
+        PasswordHash = passwordHash;
     }
 }

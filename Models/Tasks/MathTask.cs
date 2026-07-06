@@ -1,4 +1,5 @@
 using Quantify.Core.Users;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Quantify.Core.Models;
 
@@ -28,7 +29,9 @@ public class MathTask
     public long? AuthorId { get; init; }
     public required List<Answer> RightAnswer{get; init;}
 
-    public MathTask(){}
+    protected MathTask(){}
+
+    [SetsRequiredMembers]
     public MathTask(int points, DifficultyLevel level, string content, List<Answer> rightAnswer, Topic topic, int expReward = 1)
     {
         PointsCount = points;

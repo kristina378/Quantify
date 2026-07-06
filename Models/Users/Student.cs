@@ -1,4 +1,6 @@
 using Quantify.Core.Models;
+using System.Diagnostics.CodeAnalysis;
+
 
 namespace Quantify.Core.Users;
 
@@ -8,12 +10,19 @@ public class Student: User
     public List<StudentTaskProgress> Approaches {get; set;} = new List<StudentTaskProgress>();
     public List<Tutor> Tutors {get; set;} = new List<Tutor>();
 
-    public Student()
+    protected Student()
     {
         CoinsCount = 0;
     }
 
-    public Student(List<Tutor> tutors)
+    [SetsRequiredMembers]
+    public Student(string name, string surname, string email, string phoneNumber,string passwordHash):base(name, surname, email, phoneNumber,passwordHash)
+    {
+        CoinsCount = 0;
+    }
+
+    [SetsRequiredMembers]
+    public Student(string name, string surname, string email, string phoneNumber,string passwordHash, List<Tutor> tutors):base(name, surname, email, phoneNumber,passwordHash)
     {
         CoinsCount = 0;
         Tutors = tutors;

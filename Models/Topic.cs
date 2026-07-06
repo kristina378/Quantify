@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 namespace Quantify.Core.Models;
 
 public class Topic
@@ -13,7 +14,9 @@ public class Topic
     public List<MathTask> MathTasks {get; private set;} = new List<MathTask>();
 
 
-    public Topic(){}
+    protected Topic(){}
+
+    [SetsRequiredMembers]
     public Topic(string name, string content)
     {
         Name = name;
@@ -22,18 +25,11 @@ public class Topic
 
     public void AddNewTask(int points, DifficultyLevel level, string content, List<Answer> rightAnswer, int expReward = 1)
     {
-        MathTask newTask = new MathTask(points, level, content, rightAnswer, this, expReward)
-        {
-            Contents = content,
-            RightAnswer = rightAnswer
-        };
+        MathTask newTask = new MathTask(points, level, content, rightAnswer, this, expReward);
         MathTasks.Add(newTask);
     }
     public void AddAdditionalLearningMaterials(string link)
     {
-        AdditionalLearningMaterials.Add(new LearningMaterials()
-        {
-            Link = link
-        });
+        AdditionalLearningMaterials.Add(new LearningMaterials(link));
     }
 }

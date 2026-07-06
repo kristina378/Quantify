@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Quantify.Core.Models;
 
 public class Module
@@ -9,7 +11,9 @@ public class Module
 
     public List<Topic> Topics {get; private set;} = new List<Topic>();
 
-    public Module(){}
+    protected Module(){}
+
+    [SetsRequiredMembers]
     public Module(string moduleName, string moduleDescription)
     {
         Name = moduleName;
@@ -18,11 +22,7 @@ public class Module
 
     public void AddNewTopic(string topicName, string topicContent)
     {
-        Topic newTopic = new Topic()
-        {
-            Name = topicName,
-            Content = topicContent
-        };
+        Topic newTopic = new Topic(topicName,topicContent);
         
         Topics.Add(newTopic);
     }

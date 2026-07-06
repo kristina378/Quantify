@@ -15,7 +15,7 @@ public class Approach
     public StudentTaskProgress? Progress { get; init; }
     
     
-    public Approach()
+    protected Approach()
     {
         TimeStarted = DateTime.Now;
     }

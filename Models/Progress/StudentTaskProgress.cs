@@ -16,7 +16,7 @@ public class StudentTaskProgress
     
     public List<Approach> Attempts {get; init;} = new List<Approach>();
 
-    public StudentTaskProgress(){}
+    protected StudentTaskProgress(){}
     public StudentTaskProgress(long userId, MathTask task, List<Answer> studentAnswers)
     {
         ApproachNumber = 1;

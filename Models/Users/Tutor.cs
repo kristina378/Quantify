@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Quantify.Core.Users;
 
 public class Tutor: User
@@ -8,9 +10,11 @@ public class Tutor: User
     public List<Opinion> Opinions {get; set;} = new List<Opinion>();
     public List<Student> Students {get; set;} = new List<Student>();
 
-    public Tutor(){}
+    protected Tutor(){}
 
-    public Tutor(string expirience, string employmentPlace, string aboutTutor)
+    [SetsRequiredMembers]
+    public Tutor(string name, string surname, string email, string phoneNumber, string passwordHash,
+                    string expirience, string employmentPlace, string aboutTutor):base(name, surname, email, phoneNumber,passwordHash)
     {
         Experience = expirience;
         EmploymentPlace = employmentPlace;
