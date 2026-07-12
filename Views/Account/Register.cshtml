@@ -1,5 +1,3 @@
-@model Quantify.ViewModels.RegisterViewModel
-
 @{
     ViewData["Title"] = "Registration";
 }
@@ -10,36 +8,10 @@
     <p>@DateTime.Now</p>
 </div>
 
-<form method="post" asp-action="Register">
-            <div class="mb-3">
-                <label asp-for="Name">Enter your name: </label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Surname">Enter your surname: </label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Email">Enter your email: </label>
-                <input asp-for="Email" class="form-control"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="PhoneNumber">Enter your phone number: </label>
-                <input asp-for="PhoneNumber" class="form-control"/>
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Password">Enter password: </label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="PasswordToCompare">Confirm your password: </label>
-                <input asp-for="PasswordToCompare" class="form-control" />
-                <span asp-validation-for="PasswordToCompare" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Zarejestruj</button>
-</form>
+<div class="text-center mt-4">
+    <h4 class="mb-3">Choose account type</h4>
+    <div class="d-flex justify-content-center gap-3">
+        <a asp-action="RegisterStudent" class="btn btn-primary">Student</a>
+        <a asp-action="RegisterTutor" class="btn btn-primary">Tutor</a>
+    </div>
+</div>

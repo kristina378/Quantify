@@ -25,8 +25,14 @@ public class AccountController : Controller
     {
         return View();
     }
+
+    public IActionResult RegisterStudent()
+    {
+        return View();
+    }
+
     [HttpPost]
-    public IActionResult Register(RegisterViewModel registration)
+    public IActionResult RegisterStudent(RegisterStudentViewModel registration)
     {
         if (!ModelState.IsValid)
         {
@@ -37,6 +43,32 @@ public class AccountController : Controller
         
         User newUser = new Student(registration.Name,registration.Surname,registration.Email,
                 registration.PhoneNumber,hashedPassword);
+        
+        _context.Users.Add(newUser);
+        _context.SaveChanges();
+        
+        return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult RegisterTutor()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult RegisterTutor(RegisterTutorViewModel registration)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(registration);
+        }
+
+        var hasher = new PasswordHasher<User>();
+        string hashedPassword = hasher.HashPassword(null, registration.Password);
+        
+        User newUser = new Tutor(registration.Name,registration.Surname,registration.Email,
+                registration.PhoneNumber,hashedPassword,registration.Experience,
+                            registration.EmploymentPlace,registration.AboutTutor);
         
         _context.Users.Add(newUser);
         _context.SaveChanges();
