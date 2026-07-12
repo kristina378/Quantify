@@ -14,7 +14,7 @@ public class Tutor: User
 
     [SetsRequiredMembers]
     public Tutor(string name, string surname, string email, string phoneNumber, string passwordHash,
-                    string expirience, string employmentPlace, string aboutTutor):base(name, surname, email, phoneNumber,passwordHash)
+                    string? expirience, string? employmentPlace, string aboutTutor):base(name, surname, email, phoneNumber,passwordHash)
     {
         Experience = expirience;
         EmploymentPlace = employmentPlace;
