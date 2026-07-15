@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Create your new account in Quantify.</p>
+    <p>@DateTime.Now</p>
+</div>
+
+<div class="text-center mt-4">
+    <h4 class="mb-3">Choose account type</h4>
+    <div class="d-flex justify-content-center gap-3">
+        <a asp-action="RegisterStudent" class="btn btn-primary">Student</a>
+        <a asp-action="RegisterTutor" class="btn btn-primary">Tutor</a>
+    </div>
+</div>

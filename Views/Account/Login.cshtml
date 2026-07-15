@@ -1,0 +1,27 @@
+@model Quantify.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Log into your account";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Log into your account</p>
+    <p>@DateTime.Now</p>
+</div>
+
+<div class="text-center mt-4">
+    <form method="post" asp-action="Login">
+        <div class="mb-3">
+            <label asp-for="Email">Enter your email: </label>
+            <input asp-for="Email" class="form-control"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password">Enter password: </label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+    </form>
+</div>

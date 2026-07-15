@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Quantify.Core.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 public class Program
 {
@@ -9,6 +10,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
         //Connection with MySQL
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -28,6 +30,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapStaticAssets();

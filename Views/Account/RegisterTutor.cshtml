@@ -1,0 +1,60 @@
+@model Quantify.ViewModels.RegisterTutorViewModel
+
+@{
+    ViewData["Title"] = "Registration for tutor";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Create your new tutor account in Quantify.</p>
+    <p>@DateTime.Now</p>
+</div>
+
+<form method="post" asp-action="RegisterTutor">
+            <div class="mb-3">
+                <label asp-for="Name">Enter your name: </label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Surname">Enter your surname: </label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email">Enter your email: </label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber">Enter your phone number: </label>
+                <input asp-for="PhoneNumber" class="form-control"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password">Enter password: </label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PasswordToCompare">Confirm your password: </label>
+                <input asp-for="PasswordToCompare" class="form-control" />
+                <span asp-validation-for="PasswordToCompare" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Experience">Your experience description: </label>
+                <textarea asp-for="Experience" class="form-control" ></textarea>
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EmploymentPlace">Your employment place: </label>
+                <input asp-for="EmploymentPlace" class="form-control" />
+                <span asp-validation-for="EmploymentPlace" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AboutTutor">Tell something about you: </label>
+                <textarea asp-for="AboutTutor" class="form-control"></textarea>
+                <span asp-validation-for="AboutTutor" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Zarejestruj</button>
+</form>
