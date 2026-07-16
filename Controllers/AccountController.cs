@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Quantify.Controllers;
 
@@ -93,7 +94,7 @@ public class AccountController : Controller
             return View(loginData);
         }
 
-        var row = _context.Users.FirstOrDefault(user => user.Email == loginData.Email);
+        var row = await _context.Users.FirstOrDefaultAsync(user => user.Email == loginData.Email);
         if(row == null)
         {
             ModelState.AddModelError(string.Empty, "Nieprawidłowy e-mail lub hasło.");

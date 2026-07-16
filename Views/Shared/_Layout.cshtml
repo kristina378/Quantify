@@ -18,6 +18,7 @@
                             <li class="nav-item d-flex align-items-center">
                                 <span class="navbar-text me-3">Cześć @User.Identity?.Name!</span>
                             </li>
+                            <a class="nav-link" asp-controller="Profile" asp-action="Edit">Mój profil</a>
                             <li>
                                 <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button type="submit" class="btn btn-outline-danger btn-sm ms-2">Wyloguj</button>
