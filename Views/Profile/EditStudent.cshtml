@@ -1,0 +1,36 @@
+@model Quantify.ViewModels.EditStudentViewModel
+
+@{
+    ViewData["Title"] = "Your Student Quantify Profile data";
+}
+
+<div class="text-center">
+    <p>Your student account data:</p>
+    <p>@DateTime.Now</p>
+</div>
+
+<div class="text-center mt-4">
+    <form method="post" asp-action="EditStudent">
+        <div class="mb-3">
+            <label asp-for="Email">Email: </label>
+            <input asp-for="Email" class="form-control" disabled />
+            <input type="hidden" asp-for="Email" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name">Name: </label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Surname">Surname: </label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PhoneNumber">Phone number: </label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Change profile data</button>
+    </form>
+</div>

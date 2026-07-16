@@ -18,7 +18,16 @@
                             <li class="nav-item d-flex align-items-center">
                                 <span class="navbar-text me-3">Cześć @User.Identity?.Name!</span>
                             </li>
-                            <a class="nav-link" asp-controller="Profile" asp-action="Edit">Mój profil</a>
+                            @if(@User.IsInRole("Tutor")){
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Profile" asp-action="EditTutor">Mój profil</a>
+                                </li>
+                            }
+                            else{
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Profile" asp-action="EditStudent">Mój profil</a>
+                                </li>
+                            }
                             <li>
                                 <form method="post" asp-controller="Account" asp-action="Logout">
                                     <button type="submit" class="btn btn-outline-danger btn-sm ms-2">Wyloguj</button>
