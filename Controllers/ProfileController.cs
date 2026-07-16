@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Quantify.Core.Users;
 using Quantify.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Quantify.Core.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Quantify.Controllers;

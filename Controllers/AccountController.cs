@@ -5,7 +5,6 @@ using Quantify.Core.Users;
 using Quantify.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Quantify.Core.Data;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -37,12 +36,20 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult RegisterStudent(RegisterStudentViewModel registration)
+    public async Task<IActionResult> RegisterStudent(RegisterStudentViewModel registration)
     {
         if (!ModelState.IsValid)
         {
             return View(registration);
         }
+        // if account with this email already exists
+        if(await _context.Users.FirstOrDefaultAsync(user=> user.Email == registration.Email) != null)
+        {
+            ModelState.AddModelError("Email", "Already exists an account with this email address.");
+            return View(registration);
+        }
+
+
         var hasher = new PasswordHasher<User>();
         string hashedPassword = hasher.HashPassword(null!, registration.Password);
         
@@ -50,7 +57,7 @@ public class AccountController : Controller
                 registration.PhoneNumber,hashedPassword);
         
         _context.Users.Add(newUser);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         
         return RedirectToAction("Index", "Home");
     }
@@ -61,10 +68,16 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult RegisterTutor(RegisterTutorViewModel registration)
+    public async Task<IActionResult> RegisterTutor(RegisterTutorViewModel registration)
     {
         if (!ModelState.IsValid)
         {
+            return View(registration);
+        }
+
+        if(await _context.Users.FirstOrDefaultAsync(user=> user.Email == registration.Email) != null)
+        {
+            ModelState.AddModelError("Email", "Already exists an account with this email address.");
             return View(registration);
         }
 
@@ -76,7 +89,7 @@ public class AccountController : Controller
                             registration.EmploymentPlace,registration.AboutTutor);
         
         _context.Users.Add(newUser);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         
         return RedirectToAction("Index", "Home");
     }
