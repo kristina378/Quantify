@@ -124,6 +124,11 @@ public class AccountController : Controller
             claims.Add(new Claim(ClaimTypes.Name, row.Name));
             claims.Add(new Claim(ClaimTypes.Surname, row.Surname));
             
+            if(row is Tutor)
+                claims.Add(new Claim(ClaimTypes.Role,"Tutor"));
+            else
+                claims.Add(new Claim(ClaimTypes.Role,"Student"));
+            
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
@@ -141,6 +146,8 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Index", "Home");
     }
+
+    public IActionResult AccessDenied() {return View();}
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

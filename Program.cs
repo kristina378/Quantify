@@ -28,6 +28,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseStatusCodePagesWithReExecute("/Home/Error");
         app.UseRouting();
 
         app.UseAuthentication();
