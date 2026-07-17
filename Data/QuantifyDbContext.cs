@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Quantify.Core.Users;
 using Quantify.Core.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Quantify.Core.Data;
 
@@ -31,6 +32,8 @@ public class QuantifyDbContext: DbContext
 
         modelBuilder.Entity<User>()
             .HasIndex(l => l.Surname);
+
+        modelBuilder.ApplyConfiguration(new AdminConfiguration());
         
         modelBuilder.Entity<Module>()
             .HasIndex(l => l.Name);
