@@ -61,6 +61,7 @@ public class ProfileController : Controller
         claims.Add(new Claim(ClaimTypes.NameIdentifier, student.Email));
         claims.Add(new Claim(ClaimTypes.Name, student.Name));
         claims.Add(new Claim(ClaimTypes.Surname, student.Surname));
+        claims.Add(new Claim(ClaimTypes.Role,"Student"));
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
@@ -119,6 +120,7 @@ public class ProfileController : Controller
         claims.Add(new Claim(ClaimTypes.NameIdentifier, tutor.Email));
         claims.Add(new Claim(ClaimTypes.Name, tutor.Name));
         claims.Add(new Claim(ClaimTypes.Surname, tutor.Surname));
+        claims.Add(new Claim(ClaimTypes.Role,"Tutor"));
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
@@ -126,5 +128,56 @@ public class ProfileController : Controller
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
         return RedirectToAction("EditTutor","Profile");
+    }
+
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> EditAdmin()
+    {
+        var email =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user=> user.Email == email);
+        if(admin == null)    return NotFound();
+        
+        var editAdminView = new EditAdminViewModel()
+        {
+            Name = admin.Name,
+            Surname = admin.Surname,
+            Email = admin.Email,
+            PhoneNumber = admin.PhoneNumber
+        };
+
+        return View(editAdminView);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> EditAdmin(EditAdminViewModel edition)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(edition);
+        }
+
+        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user=>user.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+        if(admin == null)    return NotFound();
+
+        admin.Name = edition.Name;
+        admin.Surname = edition.Surname;
+        admin.PhoneNumber = edition.PhoneNumber;
+
+        await _context.SaveChangesAsync();
+
+        var claims = new List<Claim>();
+
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, admin.Email));
+        claims.Add(new Claim(ClaimTypes.Name, admin.Name));
+        claims.Add(new Claim(ClaimTypes.Surname, admin.Surname));
+        claims.Add(new Claim(ClaimTypes.Role,"Admin"));
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ClaimsPrincipal(identity);
+
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+        return RedirectToAction("EditAdmin","Profile");
     }
 }

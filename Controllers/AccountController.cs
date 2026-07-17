@@ -126,8 +126,10 @@ public class AccountController : Controller
             
             if(row is Tutor)
                 claims.Add(new Claim(ClaimTypes.Role,"Tutor"));
-            else
+            else if(row is Student)
                 claims.Add(new Claim(ClaimTypes.Role,"Student"));
+            else
+                claims.Add(new Claim(ClaimTypes.Role,"Admin"));
             
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
