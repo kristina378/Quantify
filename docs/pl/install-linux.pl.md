@@ -2,29 +2,42 @@
 
 Aby uruchomić projekt, wymagane jest:
 
-1) Wybrane IDE (Rider, VS Code lub inne)
 
-"Bezpłatne" IDE:
-VS Code: <https://code.visualstudio.com/download>
+1) Zainstalowane środowisko **.NET SDK 10** + **Entity Framework**(ORM).
 
-Odpłatne IDE:
-Rider: <https://www.jetbrains.com/rider/download>
+Pobierz i zainstaluj .NET SDK:
 
+* ze strony:  <https://dotnet.microsoft.com/download>
 
-2) zainstalowane środowisko **.NET SDK 10**.
+* przy pomocy **apt**(package manager):
+```bash
+sudo apt update
+sudo apt install dotnet-sdk-10.0
+```
 
-Pobierz i zainstaluj .NET SDK ze strony:  
-<https://dotnet.microsoft.com/download>
-
-Sprawdzenie wersji .NET:
+#### Aby sprawdzić wersję .NET:
 ```bash
 dotnet --version
 ```
 
+#### Jeśli jest już zainstalowany, musisz również zainstalować Entity Framework (ORM for .NET):
+```bash
+dotnet tool install --global dotnet-ef
+```
 
-3) Baza MySQL oraz klient do pracy z nią: MySQLWorkbench
+#### Dodaj ścieżke PATH dla narzędzia dotnet-ef
+```bash
+echo 'export PATH="$PATH:$HOME/.dotnet/tools"' >> ~/.bashrc
+source ~/.bashrc
+```
 
-Instalowanie MySQL + uruchomienie:
+2) Bazę danych MySQL (oraz opcjonalnie klienta do obsługi: MySQL Workbench)
+
+Możesz ją pobrać i zainstalować na dwa sposoby:
+
+* Ze strony internetowej: <https://dev.mysql.com/downloads/mysql>
+
+* Instalowanie MySQL + uruchomienie przy pomocy **apt**:
 ```bash
 sudo apt update
 sudo apt install mysql-server
@@ -38,38 +51,37 @@ systemctl enable mysql
 ```
 *sprawia, że baza będzie wstawać automatycznie po restarcie systemu*
 
-Sprawdzenie czy się zainstalowało:
+### Sprawdzenie czy się zainstalowało:
 ```bash
 mysql --version
 ```
 
-Instalowanie MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>
-lub
-```bash
-sudo snap install mysql-workbench-community
-```
-(wersja nr 2 dla Ubuntu)
+    * #### Konfiguracja hasła root:
+        Domyślnie instalacja na Linuxie może nie prosić o hasło. Aby je ustawić, zaloguj się do MySQL jako administrator:
+        ```bash
+        sudo mysql
+        ```
+        Następnie wewnątrz powłoki MySQL wykonaj poniższe komendy (zastępując `new-password` swoim własnym hasłem):
+        ```sql
+        ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'new-password';
+        FLUSH PRIVILEGES;
+        exit;
+        ```
+        ***Musisz zapamiętać to hasło***, aby zaktualizować plik `appsettings.json`.
 
+*Wskazówka: Opcjonalnie możesz zainstalować MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>*
 
-## Uruchamianie
-1) Sklonuj repozytorium i wejdź w nie:
-```bash
-git clone <https://github.com/kristina378/Quantify>
-cd Quantify
-```
-2) Utwórz plik appsettings.json i skopiuj do niego zawartość appsettings.example.json
-```bash
-cp appsettings.example.json appsettings.json
-```
-3) W pliku appsettings.json w connection string, w tym miejscu: [Pwd=TUTAJ_WPISZ_HASLO;](appsettings.example.json#L10)
-wpisz swoje hasło od bazy danych dla użytkownika root
+### Opcjonalne:
 
-4) Dodaj nową bazę danych:
-```bash
-dotnet ef database update
-```
-5) Uruchom projekt:
-```bash
-dotnet run
-```
-6) Aplikacja będzie aktywna pod adresem: <http://localhost:5270>
+1. Wybrane IDE obsługujące język C# (Rider, VS Code lub inne)
+    *Wskazówka: IDE jest opcjonalne, projekt można uruchomić samodzielnie w terminalu.*
+
+"Darmowe" IDE:
+    VS Code: <https://code.visualstudio.com/download>
+
+Odpłatne IDE:
+    Rider: <https://www.jetbrains.com/rider/download>
+
+2. Możesz pobrać klienta do pracy z MySQL, na przykład: ***MySQL Workbench***.
+Wskazówki, jak go zainstalować, znajdują się w sekcji z instrukcją instalacji MySQL
+

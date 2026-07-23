@@ -82,6 +82,7 @@ Możesz ją pobrać i zainstalować na dwa sposoby:
 
 "Darmowe" IDE:
     VS Code: <https://code.visualstudio.com/download>
+    Visual Studio: <https://visualstudio.microsoft.com/downloads/>
 
 Odpłatne IDE:
     Rider: <https://www.jetbrains.com/rider/download>
