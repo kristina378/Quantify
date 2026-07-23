@@ -80,12 +80,12 @@ Możesz ją pobrać i zainstalować na dwa sposoby:
 1. Wybrane IDE obsługujące język C# (Rider, VS Code lub inne)
     *Wskazówka: IDE jest opcjonalne, projekt można uruchomić samodzielnie w terminalu.*
 
-"Darmowe" IDE:
-    VS Code: <https://code.visualstudio.com/download>
-    Visual Studio: <https://visualstudio.microsoft.com/downloads/>
+* "Darmowe" IDE:
+    * VS Code: <https://code.visualstudio.com/download>
+    * Visual Studio: <https://visualstudio.microsoft.com/downloads/>
 
-Odpłatne IDE:
-    Rider: <https://www.jetbrains.com/rider/download>
+* Odpłatne IDE:
+    * Rider: <https://www.jetbrains.com/rider/download>
 
 2. Możesz pobrać klienta do pracy z MySQL, na przykład: ***MySQL Workbench***.
 Wskazówki, jak go zainstalować, znajdują się w sekcji z instrukcją instalacji MySQL

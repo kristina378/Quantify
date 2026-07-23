@@ -67,8 +67,8 @@ You can download and install by installing it:
     * #### installing:
         1. Then search: C:\ProgramData\Microsoft\Windows\Menu Start\Programs\MySQL\MySQL Server 8.x (8.x is version of MySQL that you installed, if you installed another version you should search for: **MySQL Server <version>** )
         2. Open MySQL Configurator
-        3. In **Type and Networking** section in **Config Type** choose *Development Computer* and left default configurations
-        4. In **Account and Roles** section you enter **password for root** (superuser), ***you need to remember this password*** to be able to use Database, in consequences to use app
+        3. In **Type and Networking** section in **Config Type** choose *Development Computer* and leave default configurations
+        4. In **Account and Roles** section you enter **password for root** (superuser), ***you need to remember this password*** to be able to use Database, in consequence, to use the app.
         5. Click Execute
 
         *Hint: here a video tutorial if you need more details: <https://www.youtube.com/watch?v=v8i2NgiM5pE&t=30s>*
@@ -79,48 +79,13 @@ You can download and install by installing it:
 1. IDE of your choice that supports C# (Rider, VS Code or something else)
     *Hint: IDE is optional, you can run project in terminal by itself*
 
-"Free" IDE:
-    VS Code: <https://code.visualstudio.com/download>
+* "Free" IDE:
+    * VS Code: <https://code.visualstudio.com/download>
+    * Visual Studio: <https://visualstudio.microsoft.com/downloads/>
 
-Paid IDE:
-    Rider: <https://www.jetbrains.com/rider/download>
+
+* Paid IDE:
+    * Rider: <https://www.jetbrains.com/rider/download>
 
 2. You can download client to work with MySQL, for example: ***MySQL Workbench***
     Hints how to install it in section with installing instruction for MySQL
-
-## To run app:
-
-1) Clone and go to repository:
-```bash
-git clone <https://github.com/kristina378/Quantify>
-cd Quantify
-```
-2) Create appsettings.json and copy the contents of appsettings.example.json into it
-```bash
-copy appsettings.example.json appsettings.json
-```
-3) In appsettings.json, find the connection string and replace [Pwd=YOUR_PASSWORD;] with your actual MySQL root password.
-
-4) To download necessary packages for app to run (like for example NuGet):
-```bash
-dotnet restore
-```
-
-5) Apply database migrations:
-```bash
-dotnet ef database update
-```
-6) Run project:
-```bash
-dotnet run
-```
-7) Application will be active at: <http://localhost:5270>
-
-*Hint: If you get error: "Connection isn't private", then try:*
-```bash
-dotnet dev-certs https --trust
-```
-*and then run project again by*
-```bash
-dotnet run
-```

@@ -2,61 +2,60 @@
 
 To run this app you will need:
 
-1) IDE of your choice that supports C# (Rider, VS Code or something else)
-*Hint: IDE is optional, you can run project in terminal by itself*
 
-"Free" IDE:
-VS Code: <https://code.visualstudio.com/download>
+1) Installed **.NET SDK 10** + **Entity Framework**(ORM).
 
-Paid IDE:
-Rider: <https://www.jetbrains.com/rider/download>
+You can either download and install .NET SDK: 
 
+* from here:  <https://dotnet.microsoft.com/download>
 
-2) Installed **.NET SDK 10**.
+* with **brew** (package manager):
+```bash
+brew install --cask dotnet-sdk
+```
 
-Download and install .NET SDK from here:  
-<https://dotnet.microsoft.com/download>
-
-To check dotnet version .NET:
+#### To check dotnet version .NET:
 ```bash
 dotnet --version
 ```
 
-3) MySQL data base and client to work with it: MySQLWorkbench
+#### If it is installed then you need to also install Entity Framework (ORM for .NET):
+```bash
+dotnet tool install --global dotnet-ef
+```
 
-Install and run MySQL :
+#### Add PATH for dotnet-ef tool
+```bash
+echo 'export PATH="$PATH:$HOME/.dotnet/tools"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+2) MySQL data base (and optionally client to work with it: MySQLWorkbench)
+
+You can download and install by installing it:
+* Installing guide : <https://dev.mysql.com/doc/mysql-macos-excerpt/8.0/en/macos-installation.html>
+
+* Install and run MySQL with **brew**:
 ```bash
 brew install mysql
 brew services start mysql
 ```
-To verify the installation (check the version):
+#### To verify the installation (check the version):
 ```bash
 mysql --version
 ```
 
-Download MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>
-
-
-
-## To run app:
-
-1) Clone and go to repository:
+* #### Configuring the root password:
+To set a password for the database, log in to MySQL:
 ```bash
-git clone <https://github.com/kristina378/Quantify>
-cd Quantify
+mysql -u root
 ```
-2) Create appsettings.json and copy the contents of appsettings.example.json into it
-```bash
-cp appsettings.example.json appsettings.json
+Then, within the MySQL shell, execute the following commands (replacing `new-password` with your own password):
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'new-password';
+FLUSH PRIVILEGES;
+exit;
 ```
-3) In appsettings.json, find the connection string and replace [Pwd=TUTAJ_WPISZ_HASLO;] with your actual MySQL root password.
+***You must remember this password*** to update the `appsettings.json` file.
 
-4) Apply database migrations:
-```bash
-dotnet ef database update
-```
-5) Run project:
-```bash
-dotnet run
-```
-6) Application will be active at: <http://localhost:5270>
+*Optionally: you can download MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>*

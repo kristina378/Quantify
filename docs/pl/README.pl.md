@@ -19,7 +19,7 @@ Dane repozytorium to przyszła platforma edukacyjna, która ma za zadanie pomaga
 Aby uruchomić projekt, wymagane jest:
 
 1) Wybrane IDE (Visual Studio, Rider, albo VS Code)
-*Popowiedź: IDE nie jest wymagane, kwestia preferencji*
+*Podpowiedź: IDE nie jest wymagane, kwestia preferencji*
 
 2) Środowisko **.NET SDK 10**.
 
@@ -37,7 +37,7 @@ Aby uruchomić projekt, wymagane jest:
 
 1) Sklonuj repozytorium i wejdź w nie:
 ```bash
-git clone <https://github.com/kristina378/Quantify>
+git clone https://github.com/kristina378/Quantify
 cd Quantify
 ```
 2) Utwórz plik appsettings.json i skopiuj do niego zawartość appsettings.example.json

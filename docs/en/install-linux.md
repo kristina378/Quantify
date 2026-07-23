@@ -2,29 +2,38 @@
 
 To run this app you will need:
 
-1) IDE of your choice that supports C# (Rider, VS Code or something else)
-*Hint: IDE is optional, you can run project in terminal by itself*
 
-"Free" IDE:
-VS Code: <https://code.visualstudio.com/download>
+1) Installed **.NET SDK 10** + **Entity Framework**(ORM).
 
-Paid IDE:
-Rider: <https://www.jetbrains.com/rider/download>
+You can either download and install .NET SDK: 
 
+* from here: <https://dotnet.microsoft.com/download>
 
-2) Installed **.NET SDK 10**.
+* with **apt** (package manager):
+```bash
+sudo apt update
+sudo apt install dotnet-sdk-10.0
+```
 
-Download and install .NET SDK from here:  
-<https://dotnet.microsoft.com/download>
-
-To check dotnet version .NET:
+#### To check dotnet version .NET:
 ```bash
 dotnet --version
 ```
 
-3) MySQL data base and client to work with it: MySQLWorkbench
+#### If it is installed then you need to also install Entity Framework (ORM for .NET):
+```bash
+dotnet tool install --global dotnet-ef
+```
 
-Install and run MySQL :
+#### Add PATH for dotnet-ef tool
+```bash
+echo 'export PATH="$PATH:$HOME/.dotnet/tools"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+2) MySQL data base (and optionally client to work with it: MySQLWorkbench)
+
+Install and run MySQL  with **apt**:
 ```bash
 sudo apt update
 sudo apt install mysql-server
@@ -38,38 +47,27 @@ systemctl enable mysql
 ```
 *makes the database start automatically after system restart*
 
-To verify the installation (check the version):
+#### To verify the installation (check the version):
 ```bash
 mysql --version
 ```
 
-Download MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>
+* #### Root Password Setup:
+By default, your Linux installation may not prompt for a password. To set one, log in to MySQL as root:
+```bash
+sudo mysql
+```
+Then, within the MySQL shell, execute the following commands (replacing `new-password` with your own password):
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'new-password';
+FLUSH PRIVILEGES;
+exit;
+```
+***You must remember this password*** to update the `appsettings.json` file.
+
+*Optionally: you can download MySQLWorkbench: <https://dev.mysql.com/downloads/workbench/>*
 or
 ```bash
 sudo snap install mysql-workbench-community
 ```
 (option 2 for Ubuntu)
-
-
-## To run app:
-
-1) Clone and go to repository:
-```bash
-git clone <https://github.com/kristina378/Quantify>
-cd Quantify
-```
-2) Create appsettings.json and copy the contents of appsettings.example.json into it
-```bash
-cp appsettings.example.json appsettings.json
-```
-3) In appsettings.json, find the connection string and replace [Pwd=TUTAJ_WPISZ_HASLO;] with your actual MySQL root password.
-
-4) Apply database migrations:
-```bash
-dotnet ef database update
-```
-5) Run project:
-```bash
-dotnet run
-```
-6) Application will be active at: <http://localhost:5270>
