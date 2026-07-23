@@ -28,6 +28,6 @@ To run this app you will need:
 
 ## Instruction how to install and run app for certain OS:
 
-<!-- * [Installation process for Windows](docs/en/install-windows.md) -->
+* [Installation process for Windows](docs/en/install-windows.md)
 * [Installation process on macOS](docs/en/install-mac.md)
 * [Installation process on Linux](docs/en/install-linux.md)
