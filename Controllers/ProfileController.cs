@@ -5,6 +5,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Quantify.Core.Users;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace Quantify.Controllers;
 
@@ -146,5 +149,41 @@ public class ProfileController : Controller
 
 
         return RedirectToAction("EditAdmin","Profile");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteProfile()
+    {
+        var id = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+
+        if (user == null) 
+        {
+            return NotFound();
+        }
+
+        user.Name = null;
+        user.Surname = null;
+        user.PhoneNumber = null;
+
+        user.NickName = "deleted" + id.ToString();
+        user.Email = user.NickName + "@quantify-math-app.pl";
+
+        user.PasswordHash = "DELETED_ACCOUNT";
+        user.IsDeleted = true;
+        user.DeletedTime = DateTime.Now;
+
+        if(user is Tutor tutor)
+        {
+            tutor.AboutTutor = "deleted";
+            tutor.EmploymentPlace = "deleted";
+            tutor.Experience = null;
+        }
+        
+        await _context.SaveChangesAsync();
+
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index", "Home");
     }
 }
