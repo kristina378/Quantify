@@ -23,6 +23,9 @@ public abstract class User
 
     public required string PasswordHash { get; set; }
 
+    public bool IsDeleted {get; set;}
+    public DateTime? DeletedTime {get; set;}
+
     protected User(){}
 
     [SetsRequiredMembers]
@@ -34,5 +37,6 @@ public abstract class User
         PhoneNumber = phoneNumber;
         NickName = nickName;
         PasswordHash = passwordHash;
+        IsDeleted = false;
     }
 }

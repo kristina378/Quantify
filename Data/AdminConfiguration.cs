@@ -16,7 +16,8 @@ public class AdminConfiguration :IEntityTypeConfiguration<Admin>
             NickName = "admin",  
             Email = "kristinadubiaha07@gmail.com", 
             PasswordHash = hashedPassword,
-            Permission = Permissions.All 
+            Permission = Permissions.All ,
+            IsDeleted = false
         });
     }
 }
