@@ -31,7 +31,8 @@ public class QuantifyDbContext: DbContext
             .IsUnique();
 
         modelBuilder.Entity<User>()
-            .HasIndex(l => l.Surname);
+            .HasIndex(l => l.NickName)
+            .IsUnique();
 
         modelBuilder.ApplyConfiguration(new AdminConfiguration());
         

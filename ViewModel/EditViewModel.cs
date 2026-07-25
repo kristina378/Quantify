@@ -4,17 +4,19 @@ namespace Quantify.ViewModels;
 
 public class EditViewModel
 {
-    [Required]
-    public required string Name{get;set;}
-    [Required]
-    public required string Surname{get;set;}
+    public string? Name {get;set;}
+    public string? Surname {get;set;}
 
     [Required]
     [DataType(DataType.EmailAddress)]
-    public required string Email {get; init;}
-
+    public required string Email {get;init;}
+    
     [Required]
+    [StringLength(40, MinimumLength = 3, ErrorMessage = "Nickname must contain at least 3 characters")]
+    public required string NickName {get;init;}
+
+
     [DataType(DataType.PhoneNumber)]
-    public required string PhoneNumber{get;set;}
+    public string? PhoneNumber {get;set;}
 
 }

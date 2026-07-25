@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations;
 namespace Quantify.ViewModels;
 public class RegisterViewModel
 {
-    [Required]
-    public required string Name {get;set;}
-    [Required]
-    public required string Surname {get;set;}
+    public string? Name {get;set;}
+    public string? Surname {get;set;}
 
     [Required]
     [EmailAddress]
     public required string Email {get;set;}
+
+    [Required]
+    [StringLength(40, MinimumLength = 3, ErrorMessage = "Nickname must contain at least 3 characters")]
+    public required string NickName {get;set;}
 
     [Required]
     [DataType(DataType.Password)]
@@ -23,7 +25,7 @@ public class RegisterViewModel
     [Compare("Password")]
     public required string PasswordToCompare {get;set;}
 
-    [Required]
     [DataType(DataType.PhoneNumber)]
-    public required string PhoneNumber {get;set;}
+    public string? PhoneNumber {get;set;}
+
 }

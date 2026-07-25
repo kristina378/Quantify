@@ -13,10 +13,8 @@ public class AdminConfiguration :IEntityTypeConfiguration<Admin>
         builder.HasData(new 
         { 
             Id = 1L, 
-            Name = "admin", 
-            Surname = "anonymous", 
+            NickName = "admin",  
             Email = "kristinadubiaha07@gmail.com", 
-            PhoneNumber = "12345678", 
             PasswordHash = hashedPassword,
             Permission = Permissions.All 
         });
