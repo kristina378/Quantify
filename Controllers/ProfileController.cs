@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Quantify.ViewModels;
 using Quantify.Core.Data;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Quantify.Core.Users;
@@ -23,8 +21,8 @@ public class ProfileController : Controller
     [Authorize(Roles = "Student")]
     public async Task<IActionResult> EditStudent()
     {
-        var email =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var student = await _context.Users.OfType<Student>().FirstOrDefaultAsync(user=> user.Email == email);
+        var id =  long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var student = await _context.Users.OfType<Student>().FirstOrDefaultAsync(user=> user.Id == id);
         if(student == null)    return NotFound();
         
         var editStudentView = new EditStudentViewModel()
@@ -32,7 +30,8 @@ public class ProfileController : Controller
             Name = student.Name,
             Surname = student.Surname,
             Email = student.Email,
-            PhoneNumber = student.PhoneNumber
+            PhoneNumber = student.PhoneNumber,
+            NickName = student.NickName
         };
 
         return View(editStudentView);
@@ -47,7 +46,8 @@ public class ProfileController : Controller
             return View(edition);
         }
 
-        var student = await _context.Users.OfType<Student>().FirstOrDefaultAsync(user=>user.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var id =  long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var student = await _context.Users.OfType<Student>().FirstOrDefaultAsync(user => user.Id == id);
         if(student == null)    return NotFound();
 
         student.Name = edition.Name;
@@ -56,26 +56,14 @@ public class ProfileController : Controller
 
         await _context.SaveChangesAsync();
 
-        var claims = new List<Claim>();
-
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, student.Email));
-        claims.Add(new Claim(ClaimTypes.Name, student.Name));
-        claims.Add(new Claim(ClaimTypes.Surname, student.Surname));
-        claims.Add(new Claim(ClaimTypes.Role,"Student"));
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
         return RedirectToAction("EditStudent","Profile");
     }
 
     [Authorize(Roles = "Tutor")]
     public async Task<IActionResult> EditTutor()
     {
-        var email =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var tutor = await _context.Users.OfType<Tutor>().FirstOrDefaultAsync(user=> user.Email == email);
+        var id =  long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var tutor = await _context.Users.OfType<Tutor>().FirstOrDefaultAsync(user => user.Id == id);
         if(tutor == null)    return NotFound();
         
         var editTutorView = new EditTutorViewModel()
@@ -84,6 +72,7 @@ public class ProfileController : Controller
             Surname = tutor.Surname,
             Email = tutor.Email,
             PhoneNumber = tutor.PhoneNumber,
+            NickName = tutor.NickName,
             Experience = tutor.Experience,
             EmploymentPlace = tutor.EmploymentPlace,
             AboutTutor = tutor.AboutTutor
@@ -101,7 +90,8 @@ public class ProfileController : Controller
             return View(edition);
         }
 
-        var tutor = await _context.Users.OfType<Tutor>().FirstOrDefaultAsync(user=>user.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var id =  long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var tutor = await _context.Users.OfType<Tutor>().FirstOrDefaultAsync(user => user.Id == id);
         if(tutor == null)    return NotFound();
 
         tutor.Name = edition.Name;
@@ -109,23 +99,10 @@ public class ProfileController : Controller
         tutor.PhoneNumber = edition.PhoneNumber;
         tutor.AboutTutor = edition.AboutTutor;
         tutor.EmploymentPlace = edition.EmploymentPlace;
-        //((Tutor)user).Experience = edition.Experience; 
-        // blad: bo zrobilam priavte set dla expirience
+        tutor.Experience = edition.Experience; 
 
 
         await _context.SaveChangesAsync();
-
-        var claims = new List<Claim>();
-
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, tutor.Email));
-        claims.Add(new Claim(ClaimTypes.Name, tutor.Name));
-        claims.Add(new Claim(ClaimTypes.Surname, tutor.Surname));
-        claims.Add(new Claim(ClaimTypes.Role,"Tutor"));
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
         return RedirectToAction("EditTutor","Profile");
     }
@@ -133,8 +110,8 @@ public class ProfileController : Controller
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> EditAdmin()
     {
-        var email =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user=> user.Email == email);
+        var id =  long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user=> user.Id == id);
         if(admin == null)    return NotFound();
         
         var editAdminView = new EditAdminViewModel()
@@ -142,7 +119,8 @@ public class ProfileController : Controller
             Name = admin.Name,
             Surname = admin.Surname,
             Email = admin.Email,
-            PhoneNumber = admin.PhoneNumber
+            PhoneNumber = admin.PhoneNumber,
+            NickName = admin.NickName
         };
 
         return View(editAdminView);
@@ -156,8 +134,8 @@ public class ProfileController : Controller
         {
             return View(edition);
         }
-
-        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user=>user.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+        long id = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var admin = await _context.Users.OfType<Admin>().FirstOrDefaultAsync(user => user.Id == id);
         if(admin == null)    return NotFound();
 
         admin.Name = edition.Name;
@@ -166,17 +144,6 @@ public class ProfileController : Controller
 
         await _context.SaveChangesAsync();
 
-        var claims = new List<Claim>();
-
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, admin.Email));
-        claims.Add(new Claim(ClaimTypes.Name, admin.Name));
-        claims.Add(new Claim(ClaimTypes.Surname, admin.Surname));
-        claims.Add(new Claim(ClaimTypes.Role,"Admin"));
-
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
         return RedirectToAction("EditAdmin","Profile");
     }
