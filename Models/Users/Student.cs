@@ -16,13 +16,15 @@ public class Student: User
     }
 
     [SetsRequiredMembers]
-    public Student(string name, string surname, string email, string phoneNumber,string passwordHash):base(name, surname, email, phoneNumber,passwordHash)
+    public Student(string? name, string? surname, string email, string? phoneNumber, string nickName, string passwordHash)
+                        :base(name, surname, email, phoneNumber, nickName, passwordHash)
     {
         CoinsCount = 0;
     }
 
     [SetsRequiredMembers]
-    public Student(string name, string surname, string email, string phoneNumber,string passwordHash, List<Tutor> tutors):base(name, surname, email, phoneNumber,passwordHash)
+    public Student(string? name, string? surname, string email, string? phoneNumber, string nickName, string passwordHash,
+                 List<Tutor> tutors):base(name, surname, email, phoneNumber, nickName, passwordHash)
     {
         CoinsCount = 0;
         Tutors = tutors;
@@ -51,12 +53,12 @@ public class Student: User
 
         if (newTaskProgress.Passed)
         {
-            //AddCoints();
+            //AddCoins();
         }
         return;
     }
 
-    public void AddCoints(int CointsCount)
+    public void AddCoins(int CointsCount)
     {
         this.CoinsCount += CointsCount;
     }

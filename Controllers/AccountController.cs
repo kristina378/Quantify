@@ -48,13 +48,17 @@ public class AccountController : Controller
             ModelState.AddModelError("Email", "Already exists an account with this email address.");
             return View(registration);
         }
-
+        if(await _context.Users.FirstOrDefaultAsync(user=> user.NickName == registration.NickName) != null)
+        {
+            ModelState.AddModelError("NickName", "Already exists an account with this nickname.");
+            return View(registration);
+        }
 
         var hasher = new PasswordHasher<User>();
         string hashedPassword = hasher.HashPassword(null!, registration.Password);
         
-        User newUser = new Student(registration.Name,registration.Surname,registration.Email,
-                registration.PhoneNumber,hashedPassword);
+        User newUser = new Student(registration.Name, registration.Surname, registration.Email,
+                registration.PhoneNumber, registration.NickName, hashedPassword);
         
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
@@ -80,13 +84,18 @@ public class AccountController : Controller
             ModelState.AddModelError("Email", "Already exists an account with this email address.");
             return View(registration);
         }
+        if(await _context.Users.FirstOrDefaultAsync(user=> user.NickName == registration.NickName) != null)
+        {
+            ModelState.AddModelError("NickName", "Already exists an account with this nickname.");
+            return View(registration);
+        }
 
         var hasher = new PasswordHasher<User>();
         string hashedPassword = hasher.HashPassword(null!, registration.Password);
         
-        User newUser = new Tutor(registration.Name,registration.Surname,registration.Email,
-                registration.PhoneNumber,hashedPassword,registration.Experience,
-                            registration.EmploymentPlace,registration.AboutTutor);
+        User newUser = new Tutor(registration.Name, registration.Surname, registration.Email,
+                registration.PhoneNumber, registration.NickName, hashedPassword, registration.Experience,
+                            registration.EmploymentPlace, registration.AboutTutor);
         
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
@@ -120,9 +129,7 @@ public class AccountController : Controller
         {
             var claims = new List<Claim>();
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, row.Email));
-            claims.Add(new Claim(ClaimTypes.Name, row.Name));
-            claims.Add(new Claim(ClaimTypes.Surname, row.Surname));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, row.Id.ToString()));
             
             if(row is Tutor)
                 claims.Add(new Claim(ClaimTypes.Role,"Tutor"));

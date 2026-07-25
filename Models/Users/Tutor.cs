@@ -4,19 +4,19 @@ namespace Quantify.Core.Users;
 
 public class Tutor: User
 {
-    public string? Experience {get; private set;}
+    public string? Experience {get; set;}
     public string? EmploymentPlace {get; set;}
-    public string? AboutTutor {get; set;}
+    public required string AboutTutor {get; set;}
     public List<Opinion> Opinions {get; set;} = new List<Opinion>();
     public List<Student> Students {get; set;} = new List<Student>();
 
     protected Tutor(){}
 
     [SetsRequiredMembers]
-    public Tutor(string name, string surname, string email, string phoneNumber, string passwordHash,
-                    string? expirience, string? employmentPlace, string aboutTutor):base(name, surname, email, phoneNumber,passwordHash)
+    public Tutor(string? name, string? surname, string email, string? phoneNumber, string nickName, string passwordHash,
+                    string? experience, string? employmentPlace, string aboutTutor):base(name, surname, email, phoneNumber, nickName, passwordHash)
     {
-        Experience = expirience;
+        Experience = experience;
         EmploymentPlace = employmentPlace;
         AboutTutor = aboutTutor;
     }

@@ -14,22 +14,25 @@ public abstract class User
     public long Id {get; private set;}
     public Permissions Permission { get; protected set;}
 
-    public required string Name {get; set;}
-    public required string Surname {get; set;}
+    public string? Name {get; set;}
+    public string? Surname {get; set;}
+
     public required string Email {get; set;}
-    public required string PhoneNumber {get; set;}
+    public string? PhoneNumber {get; set;}
+    public required string NickName {get; set;}
 
     public required string PasswordHash { get; set; }
 
     protected User(){}
 
     [SetsRequiredMembers]
-    public User(string name, string surname, string email, string phoneNumber,string passwordHash)
+    public User(string? name, string? surname, string email, string? phoneNumber, string nickName, string passwordHash)
     {
         Name = name;
         Surname = surname;
         Email = email;
         PhoneNumber = phoneNumber;
+        NickName = nickName;
         PasswordHash = passwordHash;
     }
 }

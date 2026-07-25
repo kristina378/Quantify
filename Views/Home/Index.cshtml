@@ -1,8 +1,48 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .btn-outline-custom {
+        color: #612579;
+        border: 2px solid #612579;
+        background-color: transparent;
+        transition: all 0.3s ease; /* Płynne przejście koloru */
+    }
+    
+    .btn-outline-custom:hover {
+        background-color: #7d4494;
+        color: white;
+    }
+</style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="text-center"><h1 class="display-4">Welcome</h1></div>
+        <div class="row">
+            <div class="col-lg-7">
+                <h3 class="text-center mt-5">O Projekcie:</h3>
+                    <p class="text-left" style="font-size: 25px;">
+                            Nie każdy jest matematykiem. Nie każdy chce poświęcać sporo czasu na naukę niekoniecznie ulubionego przedmiotu, kiedy na głowie są kartkówki, sprawdziany i po prostu nauka z innych przedmiotów. Dana platforma ma za zadanie pomóc uczniom w nauce matematyki, tak żeby było łatwiej zrozumieć, szybciej nauczyć się materiału
+                    </p>
+                    <ul class="list-unstyled mt-5 me-2">
+                        <li class="mb-2" style="font-size: 25px;">➔ teoria + dodatkowe wytłumaczenie krok po kroku na paru przykładach</li>
+                        <li class="mb-2" style="font-size: 25px;">➔ zadania różnej kategorii trudności</li>
+                        <li class="mb-2" style="font-size: 25px;">➔ możliwość pilnowania swojego progresu</li>
+                        <li class="mb-2" style="font-size: 25px;">➔ dodatkowe monetki do zbierania</li>
+                    </ul>
+                    <a class="btn btn-outline-custom w-70 text-center mt-4" style="font-size: 30px;" href="/Account/Register">Przebij swoje obawy i nie poddaj się matematyce!</a>
+            </div>
+                <div class="col-lg-5 text-center">
+                    <img class="img-fluid mt-4" style="max-width: 200px;" src="/images/20160901_073213.jpg" alt="Moje zdjęcie"/>
+                    <h3 class="text-center mt-3">Trochę o twórcy</h3>
+                    <p style="font-size: 20px;">
+                            Mam na imię Kristina. Jestem studentką informatyki i korepetytorką matematyki od 2 lat.
+                            Po raz pierwszy z większym problemem w zrozumieniu matematyki zetknęłam się dopiero na studiach.
+                            Stworzyłam tę platformę żeby pomóc zwykłym uczniom w nauce, bo wiem jak ciężko czasami idzie nauka.<br /></br>
+                            <i>Link do mojej strony</i>: <a href="https://kristina378.github.io">trochę więcej o mnie</a>
+                            <br />
+                            <i>Jeżeli chcesz do mnie napisać</i>: <a href="mailto:kristinadubiaha07@gmail.com">poczta</a>
+                    </p>
+                </div>
+            </div>
+        </div>
 </div>
