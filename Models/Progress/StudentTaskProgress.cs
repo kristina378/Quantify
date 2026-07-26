@@ -19,7 +19,7 @@ public class StudentTaskProgress
     protected StudentTaskProgress(){}
     public StudentTaskProgress(long userId, MathTask task, List<Answer> studentAnswers)
     {
-        ApproachNumber = 1;
+        ApproachNumber = 0;
 
         UserId = userId;
         TaskId = task.TaskId;
@@ -48,15 +48,10 @@ public class StudentTaskProgress
         }
     }
 
-    public void AddAnotherChance(int chancesCount)
-    {
-        if(chancesCount + ApproachNumber < LimitCount)
-        {
-            ApproachNumber -= chancesCount;
-        }
-        else
-        {
-            throw new AddingChancesException();
-        }
-    }
+    // public void AddAnotherChance(int chancesCount)
+    // {   
+    //     // extra protection for user to not buy infinity amount of Approaches count
+    //     chancesCount = chancesCount % (LimitCount - ApproachNumber);
+    //     ApproachNumber = ApproachNumber - chancesCount;
+    // }
 }

@@ -22,7 +22,11 @@ public class Module
 
     public void AddNewTopic(string topicName, string topicContent)
     {
-        Topic newTopic = new Topic(topicName,topicContent);
+        Topic newTopic = new Topic(topicName, topicContent)
+        {
+            Module = this,
+            ModuleId = this.ModuleId
+        };
         
         Topics.Add(newTopic);
     }

@@ -172,7 +172,7 @@ public class ProfileController : Controller
 
         user.PasswordHash = "DELETED_ACCOUNT";
         user.IsDeleted = true;
-        user.DeletedTime = DateTime.Now;
+        user.DeletedTime = DateTime.UtcNow;
 
         if(user is Tutor tutor)
         {

@@ -39,14 +39,25 @@ public class QuantifyDbContext: DbContext
         modelBuilder.Entity<Module>()
             .HasIndex(l => l.Name);
         
-        modelBuilder.Entity<LearningMaterials>()
-            .HasKey(x => x.MaterialId);
+         modelBuilder.Entity<LearningMaterials>()
+             .HasKey(x => x.MaterialId);
         
-        modelBuilder.Entity<MathTask>()
-            .HasKey(x => x.TaskId);
+         modelBuilder.Entity<MathTask>()
+             .HasKey(x => x.TaskId);
 
-        modelBuilder.Entity<Opinion>()
-            .HasKey(x => x.OpinionId);
+        // modelBuilder.Entity<MathTask>()
+        //     .HasIndex(x => x.TopicId);
+        
 
+        // modelBuilder.Entity<Topic>()
+        //     .HasIndex(x => x.ModuleId);
+        
+        modelBuilder.Entity<Topic>()
+            .HasIndex(l => l.Name);
+        
+
+        // modelBuilder.Entity<StudentTaskProgress>()
+        //     .HasIndex(x => x.UserId);
+        
     }
 }

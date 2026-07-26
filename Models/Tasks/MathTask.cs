@@ -18,7 +18,7 @@ public class MathTask
     public long TaskId {get; init;}
 
     public long TopicId{get; init;}
-    public Topic BelongsToTopic { get; init; } = null!;
+    public Topic Topic { get; init; } = null!;
 
     public int PointsCount{get; private set;}
     public DifficultyLevel Level {get; init;}
@@ -41,6 +41,6 @@ public class MathTask
         ExpReward = expReward * ((int)level + 1);
 
         TopicId = topic.TopicId;
-        BelongsToTopic = topic;
+        Topic = topic;
     }
 }

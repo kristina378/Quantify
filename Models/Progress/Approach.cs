@@ -17,22 +17,15 @@ public class Approach
     
     protected Approach()
     {
-        TimeStarted = DateTime.Now;
+        TimeStarted = DateTime.UtcNow;
     }
     public Approach(MathTask task, List<Answer> studentAnswers, StudentTaskProgress progress)
     {
-        TimeStarted = DateTime.Now;
+        TimeStarted = DateTime.UtcNow;
 
-        bool fine = true;
-        foreach(var answer in studentAnswers)
-        {
-            if (!task.RightAnswer.Any(ra => ra.CurrentAnswer == answer.CurrentAnswer))
-            {
-                fine = false;
-                break;
-            }
-        }
-        if (fine)
+        bool fine = task.RightAnswer.All(answer => studentAnswers.Any(studAnswer => studAnswer.CurrentAnswer == answer.CurrentAnswer));
+
+        if (fine && studentAnswers.Count == task.RightAnswer.Count)
         {
             Passed = true;
         }
