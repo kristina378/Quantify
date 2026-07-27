@@ -1,0 +1,15 @@
+@using Quantify.ViewModels
+@model ShowModuleContentViewModel
+
+@{
+    ViewData["Title"] = "Show Module Content";
+}
+
+<div class="text-center mt-4"><h1>@Model.Name:</h1></div>
+<div class="text-start mt-3">
+    @if(Model.Topics != null){
+        foreach(var topic in Model.Topics){
+            <a asp-controller="LearningMaterials" asp-action="ShowTopicContent" asp-route-moduleId="@Model.ModuleId" asp-route-topicId="@topic.TopicId">@topic.Name</a>
+        }
+    }
+</div>

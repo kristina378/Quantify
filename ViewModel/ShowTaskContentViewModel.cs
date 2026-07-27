@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Quantify.ViewModels;
 
-public class ShowTaskContentModel
+public class ShowTaskContentViewModel
 {
     [Required]
     public required long TaskId {get; set;}

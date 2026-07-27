@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Quantify.ViewModels;
 
-public class ShowTopicContentModel
+public class ShowTopicContentViewModel
 {
     [Required]
     public required long TopicId {get; set;}
@@ -11,5 +11,5 @@ public class ShowTopicContentModel
     [Required]
     public required string Content {get; set;}
 
-    public List<ShowTaskContentModel>? Tasks {get; set;} = null;
+    public List<ShowTaskContentViewModel>? Tasks {get; set;} = null;
 }

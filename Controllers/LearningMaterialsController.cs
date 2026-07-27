@@ -23,6 +23,28 @@ public class LearningMaterialsController : Controller
         return View();
     }
 
+    public async Task<IActionResult> ShowModulesList()
+    {
+        var modules = await _context.Modules.ToListAsync();
+        if(modules == null)
+            return NotFound();
+        
+        var modulesViews = new List<ShowModuleContentViewModel>();
+
+        foreach(var module in modules)
+        {
+            var newModuleView = new ShowModuleContentViewModel()
+            {
+                ModuleId = module.ModuleId,
+                Name = module.Name,
+                Description = module.Description
+            };
+            modulesViews.Add(newModuleView);
+        }
+
+        return View(modulesViews);
+    }
+
     public async Task<IActionResult> ShowModuleContent(long moduleId)
     {
         var module = await _context.Modules.Include(module => module.Topics).FirstOrDefaultAsync(module => module.ModuleId == moduleId);
@@ -30,13 +52,13 @@ public class LearningMaterialsController : Controller
             return NotFound();
 
         var topics = module.Topics;
-        List<ShowTopicContentModel>? topicsView = null;
+        List<ShowTopicContentViewModel>? topicsView = null;
         if(topics != null)
         {   
-            topicsView = new List<ShowTopicContentModel>();
+            topicsView = new List<ShowTopicContentViewModel>();
             foreach(var topic in topics)
             {
-                var newTopicView = new ShowTopicContentModel()
+                var newTopicView = new ShowTopicContentViewModel()
                 {
                     TopicId = topic.TopicId,
                     Name = topic.Name,
@@ -45,7 +67,7 @@ public class LearningMaterialsController : Controller
                 topicsView.Add(newTopicView);
             }
         }
-        var moduleView = new ShowModuleContentModel()
+        var moduleView = new ShowModuleContentViewModel()
         {
             ModuleId = module.ModuleId,
             Name = module.Name,
@@ -72,13 +94,13 @@ public class LearningMaterialsController : Controller
             return NotFound();
         
         var tasks = await _context.MathTasks.Where(task => task.TopicId == topic.TopicId).ToListAsync();
-        List<ShowTaskContentModel>? tasksView = null;
+        List<ShowTaskContentViewModel>? tasksView = null;
         if(tasks.Count != 0)
         {
-            tasksView = new List<ShowTaskContentModel>();
+            tasksView = new List<ShowTaskContentViewModel>();
             foreach(var task in tasks)
             {
-                var newTaskView = new ShowTaskContentModel()
+                var newTaskView = new ShowTaskContentViewModel()
                 {
                     TaskId = task.TaskId,
                     Contents = task.Contents,
@@ -91,7 +113,7 @@ public class LearningMaterialsController : Controller
         }
 
 
-        var topicView = new ShowTopicContentModel()
+        var topicView = new ShowTopicContentViewModel()
         {
             TopicId = topic.TopicId,
             Name = topic.Name,
@@ -109,7 +131,7 @@ public class LearningMaterialsController : Controller
         if(task == null)
             return NotFound();
         
-        var taskView = new ShowTaskContentModel()
+        var taskView = new ShowTaskContentViewModel()
         {
             TaskId = task.TaskId,
             Contents = task.Contents,
