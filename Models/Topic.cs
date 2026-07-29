@@ -28,6 +28,12 @@ public class Topic
         MathTask newTask = new MathTask(points, level, content, rightAnswer, this, expReward);
         MathTasks.Add(newTask);
     }
+
+    public void AddNewTask(MathTask newTask)
+    {
+        MathTasks.Add(newTask);
+    }
+    
     public void AddAdditionalLearningMaterials(string link)
     {
         AdditionalLearningMaterials.Add(new LearningMaterials(link));
