@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Quantify.ViewModels;
 
-public class AddTopicViewModel()
+public class AddTopicViewModel
 {
     public long ModuleId { get; set; }
+    public long TopicId {get; set;}
 
     [Required]
     public string? Name {get; set;}

@@ -14,4 +14,6 @@ public class ShowTaskContentViewModel
     [Required]
     public required int DifficultyLevel {get; set;}
     public int ExpReward{get; init;}
+
+    public List<AnswerViewModel> Answers {get; set;} = new List<AnswerViewModel>();
 }

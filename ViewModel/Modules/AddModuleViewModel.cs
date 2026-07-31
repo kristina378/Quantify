@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Quantify.ViewModels;
 
-public class AddModuleViewModel()
+public class AddModuleViewModel
 {
     [Required]
     public required string Name {get; set;}

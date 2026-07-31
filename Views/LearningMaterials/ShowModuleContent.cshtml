@@ -22,6 +22,10 @@
         }
     }
 </div>
-<div class="text-center mt-4">
-    <a class="btn btn-primary" asp-controller="Modules" asp-action="AddTopic" asp-route-moduleId="@Model.ModuleId">Add a new Topic</a>
-</div>
+
+@if(User.Identity?.IsAuthenticated == true && User.IsInRole("Admin")){
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" asp-controller="Modules" asp-action="AddTopic" asp-route-moduleId="@Model.ModuleId">Add a new Topic</a>
+    </div>
+}
+

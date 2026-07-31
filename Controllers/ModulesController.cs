@@ -33,11 +33,16 @@ public class ModulesController: Controller
     }
 
     
-    // [Authorize(Roles = "Admin")]
-    // public IActionResult AddTask()
-    // {
-    //     return View();
-    // }
+    [Authorize(Roles = "Admin")]
+    public IActionResult AddTask(long moduleId, long topicId)
+    {
+        AddTaskViewModel taskView = new AddTaskViewModel(){
+            ModuleId = moduleId,
+            TopicId = topicId,
+            Contents = string.Empty
+        };
+        return View(taskView);
+    }
 
 
     [HttpPost]
@@ -79,28 +84,49 @@ public class ModulesController: Controller
     }
 
 
-    //[HttpPost]
-    //[Authorize(Roles = "Admin")]
-    // public async Task<IActionResult> AddTask(long moduleId, long topicId, AddTaskViewModel task)
-    // {
-        //  if (!ModelState.IsValid)
-        // {
-        //     return View(task);
-        // }
-    //     Module module = await _context.Modules.Include(module => module.Topics)
-    //                 .FirstOrDefaultAsync(module => module.ModuleId == moduleId);
-    //     if(module == null)
-    //         return NotFound();
-
-    //     Topic topic = module.Topics.FirstOrDefault(topic => topic.TopicId == topicId);
-    //     if(topic == null)
-    //         return NotFound();
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddTask(AddTaskViewModel task)
+    {
+         if (!ModelState.IsValid)
+        {
+            return View(task);
+        }
         
-    //     MathTask newTask = new MathTask(task.PointsCount, (DifficultyLevel)task.Level, task.Contents);
-    //     topic.AddNewTask(newTask);
+        Module? module = await _context.Modules.Include(module => module.Topics)
+                    .FirstOrDefaultAsync(module => module.ModuleId == task.ModuleId);
+        if(module == null)
+            return NotFound();
 
-    //     await _context.SaveChangesAsync();
+        Topic? topic = module.Topics.FirstOrDefault(topic => topic.TopicId == task.TopicId);
+        if(topic == null)
+            return NotFound();
         
-    //     return RedirectToAction("ShowTaskContent");
-    // }
+
+        List<Answer> answers = new List<Answer>();
+
+        if(task.AllAnswers != null && task.AllAnswers.Count != 0)
+        {
+            foreach(var answer in task.AllAnswers)
+            {
+                if (!string.IsNullOrWhiteSpace(answer.Content))
+                {
+                    Answer currAnswer = new Answer()
+                    {
+                        Content = answer.Content,
+                        IsCorrect = answer.IsCorrect
+                    };
+                    answers.Add(currAnswer);
+                }
+            }
+        }
+        
+        MathTask newTask = new MathTask(task.PointsCount, (DifficultyLevel)task.Level, task.Contents, answers, topic, task.ExpReward);
+        topic.AddNewTask(newTask);
+
+        await _context.SaveChangesAsync();
+        
+        return RedirectToAction("ShowTaskContent", "LearningMaterials", new {taskId = newTask.TaskId});
+    }
+
 }

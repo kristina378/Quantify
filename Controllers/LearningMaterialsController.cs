@@ -5,6 +5,7 @@ using Quantify.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Quantify.Core.Models;
 using Quantify.ViewModels;
+using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
 
 
 namespace Quantify.Controllers;
@@ -116,6 +117,7 @@ public class LearningMaterialsController : Controller
         var topicView = new ShowTopicContentViewModel()
         {
             TopicId = topic.TopicId,
+            ModuleId = moduleId,
             Name = topic.Name,
             Content = topic.Content,
             Tasks = tasksView
@@ -127,16 +129,35 @@ public class LearningMaterialsController : Controller
     
     public async Task<IActionResult> ShowTaskContent(long taskId)
     {
-        var task = await _context.MathTasks.FirstOrDefaultAsync(task => task.TaskId == taskId);
+        var task = await _context.MathTasks.Include(task => task.AllAnswers).FirstOrDefaultAsync(task => task.TaskId == taskId);
         if(task == null)
             return NotFound();
+        
+        List<AnswerViewModel> answers = new List<AnswerViewModel>();
+        if(task.AllAnswers != null  && task.AllAnswers.Count != 0)
+        {
+            foreach(var answer in task.AllAnswers)
+            {
+                if (!string.IsNullOrWhiteSpace(answer.Content))
+                {
+                    AnswerViewModel answerView = new AnswerViewModel()
+                    {
+                        Content = answer.Content,
+                        IsCorrect = answer.IsCorrect
+                    };
+                    answers.Add(answerView);
+                }
+            }
+        }
         
         var taskView = new ShowTaskContentViewModel()
         {
             TaskId = task.TaskId,
             Contents = task.Contents,
             PointsCount = task.PointsCount,
-            DifficultyLevel = (int)task.Level
+            DifficultyLevel = (int)task.Level,
+            ExpReward = task.ExpReward,
+            Answers = answers
         };
 
         
