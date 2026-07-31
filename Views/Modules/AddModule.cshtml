@@ -1,0 +1,16 @@
+@using Quantify.ViewModels
+@model AddModuleViewModel
+
+<form method="post" asp-action="AddModule">
+    <div class="mb-3">
+        <label asp-for="Name">Module Name:</label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description">Module Description:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Module</button>
+</form>

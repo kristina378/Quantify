@@ -27,20 +27,22 @@ public class MathTask
     public required string Contents {get; init;}
     public User? Author{get; private set;}
     public long? AuthorId { get; init; }
-    public required List<Answer> RightAnswer{get; init;}
+
+    public List<Answer>? AllAnswers {get; set;}
 
     protected MathTask(){}
 
     [SetsRequiredMembers]
-    public MathTask(int points, DifficultyLevel level, string content, List<Answer> rightAnswer, Topic topic, int expReward = 1)
+    public MathTask(int points, DifficultyLevel level, string content,List<Answer> allAnswers, Topic topic, int expReward = 1)
     {
         PointsCount = points;
         Level = level;
         Contents = content;
-        RightAnswer = rightAnswer;
         ExpReward = expReward * ((int)level + 1);
 
         TopicId = topic.TopicId;
         Topic = topic;
+
+        AllAnswers = allAnswers;
     }
 }

@@ -23,13 +23,15 @@ public class Approach
     {
         TimeStarted = DateTime.UtcNow;
 
-        bool fine = task.RightAnswer.All(answer => studentAnswers.Any(studAnswer => studAnswer.CurrentAnswer == answer.CurrentAnswer));
+        List<Answer>? rightAnswers = task.AllAnswers.FindAll(answer => answer.IsCorrect);
 
-        if (fine && studentAnswers.Count == task.RightAnswer.Count)
+
+        bool fine = rightAnswers.All(answer => studentAnswers.Any(studAnswer => studAnswer.Content == answer.Content));
+
+        if (fine && studentAnswers.Count == rightAnswers.Count)
         {
             Passed = true;
         }
         Progress = progress;
     }
-
 }

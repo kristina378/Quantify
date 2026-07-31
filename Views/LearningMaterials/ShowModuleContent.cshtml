@@ -1,0 +1,31 @@
+@using Quantify.ViewModels
+@model ShowModuleContentViewModel
+
+@{
+    ViewData["Title"] = "Show Module Content";
+}
+
+<div class="text-center mt-4"><h1>@Model.Name:</h1></div>
+@if(Model.Description != null){
+    <div class="text-center mt-4"><p>@Model.Description:</p></div>
+}
+<div class="text-start mt-3">
+    @if(Model.Topics != null){
+        foreach(var topic in Model.Topics){
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                            <a class="text-decoration-none" asp-controller="LearningMaterials" asp-action="ShowTopicContent" asp-route-moduleId="@Model.ModuleId" asp-route-topicId="@topic.TopicId">@topic.Name</a>
+                    </h5>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@if(User.Identity?.IsAuthenticated == true && User.IsInRole("Admin")){
+    <div class="text-center mt-4">
+        <a class="btn btn-primary" asp-controller="Modules" asp-action="AddTopic" asp-route-moduleId="@Model.ModuleId">Add a new Topic</a>
+    </div>
+}
+

@@ -14,7 +14,7 @@ public class Module
     protected Module(){}
 
     [SetsRequiredMembers]
-    public Module(string moduleName, string moduleDescription)
+    public Module(string moduleName, string? moduleDescription)
     {
         Name = moduleName;
         Description = moduleDescription;
@@ -28,6 +28,10 @@ public class Module
             ModuleId = this.ModuleId
         };
         
+        Topics.Add(newTopic);
+    }
+    public void AddNewTopic(Topic newTopic)
+    {
         Topics.Add(newTopic);
     }
 }

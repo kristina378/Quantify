@@ -1,0 +1,38 @@
+@using Quantify.ViewModels
+@model AddTaskViewModel
+
+<form method="post" asp-action="AddTask">
+    <input type="hidden" asp-for="ModuleId" />
+    <input type="hidden" asp-for="TopicId" />
+    <div class="mb-3">
+        <label asp-for="Contents">Task Content:</label>
+        <textarea asp-for="Contents" class="form-control"></textarea>
+        <span asp-validation-for="Contents" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PointsCount">Points count:</label>
+        <input asp-for="PointsCount" class="form-control"/>
+        <span asp-validation-for="PointsCount" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Level">Level from 0 - 5:</label>
+        <input asp-for="Level" class="form-control"/>
+        <span asp-validation-for="Level" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ExpReward">Exp reward for task:</label>
+        <input asp-for="ExpReward" class="form-control"/>
+        <span asp-validation-for="ExpReward" class="text-danger"></span>
+    </div>
+    @if(Model.AllAnswers != null && Model.AllAnswers.Count != 0){
+        @for(int i = 0; i < Model.AllAnswers.Count; i++){
+            <div class="mb-3">
+                <label asp-for="AllAnswers[i].Content"></label>
+                <input asp-for="AllAnswers[i].Content" class="form-control"/>
+                <input type="checkbox" asp-for="AllAnswers[i].IsCorrect"/>
+                <span asp-validation-for="AllAnswers[i].Content" class="text-danger"></span>
+            </div>
+        }
+    }
+    <button type="submit" class="btn btn-primary">Add Task</button>
+</form>

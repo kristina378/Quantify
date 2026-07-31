@@ -1,0 +1,17 @@
+@using Quantify.ViewModels
+@model AddTopicViewModel
+
+<form method="post" asp-action="AddTopic">
+    <input type="hidden" asp-for="ModuleId" />
+    <div class="mb-3">
+        <label asp-for="Name">Topic Name:</label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Content">Topic Content:</label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Topic</button>
+</form>
