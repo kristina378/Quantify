@@ -23,9 +23,9 @@ public class Topic
         Content = content;
     }
 
-    public void AddNewTask(int points, DifficultyLevel level, string content, List<Answer> rightAnswer, int expReward = 1)
+    public void AddNewTask(int points, DifficultyLevel level, string content,List<Answer> allAnswers, int expReward = 1)
     {
-        MathTask newTask = new MathTask(points, level, content, rightAnswer, this, expReward);
+        MathTask newTask = new MathTask(points, level, content, allAnswers, this, expReward);
         MathTasks.Add(newTask);
     }
 
