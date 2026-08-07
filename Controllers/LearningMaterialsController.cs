@@ -133,35 +133,31 @@ public class LearningMaterialsController : Controller
         if(task == null)
             return NotFound();
         
-        List<AnswerViewModel> answers = new List<AnswerViewModel>();
+        List<AnswerDisplayViewModel> answers = new List<AnswerDisplayViewModel>();
         if(task.AllAnswers != null  && task.AllAnswers.Count != 0)
         {
             foreach(var answer in task.AllAnswers)
             {
                 if (!string.IsNullOrWhiteSpace(answer.Content))
                 {
-                    AnswerViewModel answerView = new AnswerViewModel()
+                    AnswerDisplayViewModel answerView = new AnswerDisplayViewModel()
                     {
-                        Content = answer.Content,
-                        IsCorrect = answer.IsCorrect
+                        AnswerId = answer.AnswerId,
+                        Content = answer.Content
                     };
                     answers.Add(answerView);
                 }
             }
         }
         
-        var taskView = new ShowTaskContentViewModel()
+        var taskDisplayView = new SolveTaskDisplayViewModel()
         {
             TaskId = task.TaskId,
             Contents = task.Contents,
-            PointsCount = task.PointsCount,
-            DifficultyLevel = (int)task.Level,
-            ExpReward = task.ExpReward,
             Answers = answers
         };
-
         
-        return View(taskView);
+        return View(taskDisplayView);
     }
 
 }

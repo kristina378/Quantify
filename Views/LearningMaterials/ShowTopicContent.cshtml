@@ -11,7 +11,9 @@
 <div class="text-start mt-3">
     @if(Model.Tasks != null){
         foreach(ShowTaskContentViewModel task in Model.Tasks){
-            <a asp-controller="LearningMaterials" asp-action="ShowTaskContent" asp-route-taskId="@task.TaskId">@task.Contents</a>
+            <div class="text-start">
+                <a asp-controller="LearningMaterials" asp-action="ShowTaskContent" asp-route-taskId="@task.TaskId">@task.Contents</a>
+            </div>
         }
     }
 </div>
